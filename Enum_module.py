@@ -1,21 +1,28 @@
 from enum import Enum
 
-from fastapi import FastAPI
+from fastapi import FastAPI,status,Response
+from routers import blog_routes
+#-------------------- predefined parameters ---------------//
 
-
-class ModelName(str, Enum):
-    alexnet = "alexnet"
-    resnet = "resnet"
-    lenet = "lenet"
 
 app = FastAPI()
+app.include_router(blog_routes.router)
 
-@app.get("/models/{model_name}")
-async def get_model(model_name: ModelName):
-    if model_name is ModelName.alexnet:
-        return {"model_name": model_name, "message": "Deep Learning FTW!"}
+@app.get("/hello")
+def get_welcome():
+    return {"message": "Hello world !"}
 
-    if model_name.value == "lenet":
-        return {"model_name": model_name, "message": "LeCNN all the images"}
 
-    return {"model_name": model_name, "message": "Have some residuals"}
+# @app.get("/models/{model_name}")
+# async def get_model(model_name: ModelName):
+#     if model_name is ModelName.alexnet:
+#         return {"model_name": model_name, "message": "Deep Learning FTW!"}
+
+#     if model_name.value == "lenet":
+#         return {"model_name": model_name, "message": "LeCNN all the images"}
+
+#     return {"model_name": model_name, "message": "Have some residuals"}
+
+
+# #----------------------------- query Parameters ------------------------------//
+
